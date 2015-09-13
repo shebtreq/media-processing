@@ -3,7 +3,7 @@ import sys
 import os
 import time
 
-cascPath = (os.path.dirname(os.path.realpath(__file__))) + "basicFace/face-data.xml"
+cascPath = (os.path.dirname(os.path.realpath(__file__))) + "/classifiers/basic-face/face-data.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 video_capture = cv2.VideoCapture(0)
 
@@ -38,9 +38,6 @@ while True:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
     # Display the resulting frame
     cv2.imshow('Video', frame)
-
-
-
 
 
 # When everything is done, release the capture
