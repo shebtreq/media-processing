@@ -6,12 +6,13 @@ import numpy as np
 
 cascPaths = []
 cascades = []
-scaleFactor = 0.3
-scaleMulti = 1/scaleFactor
+
 
 count = 0
 arrayOfPrevObjects = []
 
+#cascPaths.append( (os.path.dirname(os.path.realpath(__file__))) + "/classifiers/body10/haarcascade_fullbody.xml")
+#cascPaths.append( (os.path.dirname(os.path.realpath(__file__))) + "/classifiers/basic-face/face-data.xml")
 cascPaths.append( (os.path.dirname(os.path.realpath(__file__))) + "/classifiers/frontalFace10/haarcascade_frontalface_default.xml")
 cascPaths.append( (os.path.dirname(os.path.realpath(__file__))) + "/classifiers/HS.xml")
 
@@ -27,29 +28,25 @@ while True:
     ret, frame = video_capture.read()
     width = video_capture.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
     height = video_capture.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
-    smallframe = cv2.resize(frame, None, None, scaleFactor, scaleFactor)
-
-
     #Process frame using data
     if count > 5:
         count = 0
         arrayOfPrevObjects = []
         for index in range(len(cascades)):
-            detections = cascades[index].detectMultiScale(
-                cv2.cvtColor(smallframe, cv2.COLOR_BGR2GRAY),
+            faces = cascades[index].detectMultiScale(
+                cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY),
                 scaleFactor=1.1,
                 minNeighbors=5,
                 minSize=(30, 30),
                 flags=cv2.cv.CV_HAAR_SCALE_IMAGE
             )
-            arrayOfPrevObjects.append(detections)
+            arrayOfPrevObjects.append(faces)
     else:
         count+=1
 
     # Draw a rectangle around the objects
     for index in range(len(arrayOfPrevObjects)):
         for (x, y, w, h) in arrayOfPrevObjects[index]:
-            x, y, w, h = int(x*scaleMulti), int(y*scaleMulti), int(w*scaleMulti), int(h*scaleMulti)
             cv2.rectangle(frame, (x, y), (x+w, y+h), arrayOfColors[index], 2)
             cv2.line(frame, (int(width/2), int(height/2)), (int(x+w/2), int(y+h/2)), arrayOfColors[index], 2)
 
