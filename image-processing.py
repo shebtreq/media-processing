@@ -3,6 +3,7 @@ import os
 import cv2
 import time
 import numpy as np
+import subprocess
 
 cascPaths = []
 cascades = []
@@ -23,6 +24,7 @@ arrayOfColors = np.random.randint(0,255,(len(cascPaths),3))
 windowName = "Detect Faces"
 cv2.startWindowThread()
 cv2.namedWindow(windowName)
+hasDetectedFace = 0
 
 while True:
 
@@ -51,6 +53,9 @@ while True:
 
     # Draw a rectangle around the objects
     for index in range(len(arrayOfPrevObjects)):
+        #Set hasDetectedFace if face has been detected
+        if len(arrayOfPrevObjects[index])>0:
+            hasDetectedFace += 1
         for (x, y, w, h) in arrayOfPrevObjects[index]:
             x, y, w, h = int(x*scaleMulti), int(y*scaleMulti), int(w*scaleMulti), int(h*scaleMulti)
             cv2.rectangle(frame, (x, y), (x+w, y+h), arrayOfColors[index], 2)
@@ -58,6 +63,13 @@ while True:
 
     # Display the resulting frame
     cv2.imshow(windowName, frame)
+
+    #Send bash command to server
+    if hasDetectedFace==1:
+        print "Launching Camera!"
+        subprocess.call((os.path.dirname(os.path.realpath(__file__))) + "/launchcam.sh", shell=True)
+
+
 
 
 # When everything is done, release the capture
