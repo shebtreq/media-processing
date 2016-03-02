@@ -1,0 +1,11 @@
+{
+  "name": "media-processing",
+  "version": "0.0.0",
+  "description": "media processing",
+  "main": "image-processing.py",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shebtreq/media-processing.git"
+  },
+  "author": "strq"
+}

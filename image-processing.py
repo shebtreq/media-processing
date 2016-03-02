@@ -20,6 +20,9 @@ for cascPath in cascPaths:
 video_capture = cv2.VideoCapture(0)
 arrayOfColors = np.random.randint(0,255,(len(cascPaths),3))
 
+windowName = "Detect Faces"
+cv2.startWindowThread()
+cv2.namedWindow(windowName)
 
 while True:
 
@@ -54,8 +57,7 @@ while True:
             cv2.line(frame, (int(width/2), int(height/2)), (int(x+w/2), int(y+h/2)), arrayOfColors[index], 2)
 
     # Display the resulting frame
-    cv2.imshow('Video', frame)
-
+    cv2.imshow(windowName, frame)
 
 
 # When everything is done, release the capture
