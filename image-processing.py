@@ -67,7 +67,8 @@ while True:
     #Send bash command to server
     if hasDetectedFace==1:
         print "Launching Camera!"
-        subprocess.call((os.path.dirname(os.path.realpath(__file__))) + "/launchcam.sh", shell=True)
+	break;
+        #subprocess.call((os.path.dirname(os.path.realpath(__file__))) + "/launchcam.sh", shell=True)
 
 
 
@@ -75,3 +76,7 @@ while True:
 # When everything is done, release the capture
 video_capture.release()
 cv2.destroyAllWindows()
+
+#Send bash command to server
+subprocess.call((os.path.dirname(os.path.realpath(__file__))) + "/launchcam.sh", shell=True)
+

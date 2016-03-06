@@ -1,1 +1,1 @@
-google-chrome http://localhost:3000/
+google-chrome http://localhost:3001/
